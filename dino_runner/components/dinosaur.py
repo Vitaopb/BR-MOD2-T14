@@ -2,13 +2,16 @@ from dino_runner.utils.constants import (RUNNING, JUMPING, DUCKING)
 import pygame
 
 X_POS = 80
-Y_POS = 220
-Y_POS_DUCK = 250
+Y_POS = 255
+Y_POS_DUCK = 370
 JUMP_VEL = 8.5
+
+RUN_1 = pygame.transform.scale(RUNNING[0], [200, 200])
+RUN_2 = pygame.transform.scale(RUNNING[1], [200, 200])
 
 class Dinosaur:
   def __init__(self):
-    self.image = RUNNING[0]
+    self.image = RUN_1
     self.dino_rect = self.image.get_rect()
     self.dino_rect.x = X_POS
     self.dino_rect.y = Y_POS
@@ -19,7 +22,7 @@ class Dinosaur:
     self.dino_duck = False
     
   def run(self):
-    self.image = RUNNING[0] if self.step_index < 5 else RUNNING[1]
+    self.image = RUN_1 if self.step_index < 5 else RUN_2
     self.dino_rect.x = X_POS
     self.dino_rect.y = Y_POS
     self.step_index += 1  
@@ -27,8 +30,8 @@ class Dinosaur:
   def jump(self):
     self.image = JUMPING
     if self.dino_jump:
-      self.dino_rect.y -= self.jump_vel * 3
-      self.jump_vel -= 0.8
+      self.dino_rect.y -= self.jump_vel * 4
+      self.jump_vel -= 0.6
     
     if self.jump_vel < -JUMP_VEL:
       self.dino_rect.y = Y_POS
@@ -36,7 +39,7 @@ class Dinosaur:
       self.jump_vel = JUMP_VEL
 
   def duck(self):
-    self.image = DUCKING[0] if self.step_index < 5 else DUCKING[1]
+    self.image = pygame.transform.scale(DUCKING[0], [200, 200])
     self.dino_rect = self.image.get_rect()
     self.dino_rect.x = X_POS
     self.dino_rect.y = Y_POS_DUCK
